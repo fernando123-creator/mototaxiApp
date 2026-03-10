@@ -1,0 +1,165 @@
+*{
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+    font-family: 'fjalla One';
+}
+
+html, body{
+height:100%;
+}
+
+.layaout{
+    display:grid;
+    grid-template-columns:200px 1fr;
+    grid-template-rows:80px 1fr;
+    height:100%;
+    gap:5px;
+    padding:5px;
+}
+
+.title{
+border: 1px solid black;
+border-radius:5px;
+align-content: center;
+}
+
+
+h1{
+    text-align: center;
+}
+
+.barraLateralIzq{
+    grid-row:1 / 3;
+    border: 1px solid black;
+    border-radius:5px;
+    display: flex;
+    flex-direction: column;
+}
+
+.nombreApp{
+    border-bottom: 2px solid black;
+    margin: 5px;
+    padding: 5px;
+}
+
+.nombreApp h2{
+    text-align: center;
+}
+
+.barraIzqOpciones{
+    display: flex;
+    flex-direction: column;
+    height: 100%;
+    border-top: 2px solid black;
+    margin: 5px;
+    align-items: center;
+}
+
+.barraIzqOpciones h3{
+    margin: 25px 0;
+    text-align: center;
+}
+
+.barraIzqOpciones a{
+    text-decoration: none;
+    color: inherit;
+}
+
+.barraIzqOpciones a h3 {
+    width: 130px;
+}
+
+.cerrarSecion{
+    margin-top: auto;
+    margin-left: 20px;
+    width: 140px;
+    display: flex;
+    
+}
+
+.cerrarSecion h3{
+    text-align: center;
+    margin-bottom: auto;
+}
+
+.cerrarSecion a{
+    text-decoration: none;
+    color: inherit;
+}
+
+.contenedorDePedidos{
+    display: flex;
+    flex-direction: column;
+border: 1px solid black;
+border-radius:5px;
+}
+
+.btnDeActivoDesactivado{
+    border: 2px solid black;
+    border-radius: 15px;
+    height: 50px;
+    margin: 8px;
+    align-content: center;
+    text-align: center;
+}
+
+.listaDePedidos{
+    border: 2px solid black;
+    border-radius: 15px;
+    margin: 5px;
+    
+    display: flex;
+    flex-wrap: wrap;
+    gap: 10px;
+}
+
+.solicitud{
+    width: 300px;
+    margin: 10px;
+    border: 1px solid black;
+    border-radius: 15px;
+}
+
+.solicitud .tipoService {
+    border-bottom: 2px solid blue;
+}
+
+.solicitud h3{
+    margin: 10px;
+}
+
+.estado{
+    margin: 5px;
+    border: 1px solid black;
+    position: relative;
+    width: 100px;
+    text-align: center;
+}
+
+label{
+    color: #34C234;
+}
+
+.btnDeCambio{
+    position: absolute;
+    right: 20px;
+    top: 110px;
+    width: 80px;
+    border: 1px solid black;
+    border-radius: 15px;
+    background: rgba(235, 22, 22, 0.849);
+    padding: 5px;
+    cursor: pointer;
+}
+
+.buton{
+    border: 2px solid black;
+    border-radius: 15px;
+    width: 100px;
+    height: 35px;
+    margin: 8px;
+    align-content: center;
+    cursor: pointer;
+}
+

@@ -1,0 +1,78 @@
+*{
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+    font-family: "fjalla One"
+}
+
+body{
+    background-color: #a189be;
+}
+
+label{
+    color: blue;
+}
+
+h1{
+    text-align: center;
+    margin-top: 30px;
+    margin-bottom: 20px;
+}
+
+.containerLogo{
+    width: 150px;
+    height: 150px;
+    margin: 20px auto;
+}
+
+.containerLogo img{
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+}
+
+.containFormulario{
+    display: flex;
+    flex-direction: column;
+    width: 350px;
+    height: 200px;
+    margin: 0 auto;
+}
+
+.input{
+    width: 90%;
+    height: 40px;
+    margin-bottom: 10px;
+    margin-top: 4px;
+    margin-left: 5%;
+    margin-right: 5%;
+    border: none;
+    background: #0F0E17;
+    outline: none;
+    border-radius: 15px;
+    color: antiquewhite;
+    padding-left: 8px;
+}
+
+.input:hover{
+box-shadow:0px 4px 8px rgba(0, 0, 0, 0.247);
+border: 1px solid #E8DCDC;
+}
+
+.buton{
+    width: 100px;
+    height: 30px;
+    margin: 0 auto;
+    border-radius: 15px;
+    background: #2CA835;
+    border: 2px solid green;
+}
+
+.buton:hover{
+    box-shadow:0px 4px 8px rgba(0, 0, 0, 0.247);
+    border: 1px solid #E8DCDC;
+}
+
+.buton:active{
+transform:scale(0.95);
+}

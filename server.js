@@ -1,107 +1,34 @@
-import express from 'express';
-import bodyParser from 'body-parser';
-import path from 'path';
-import { fileURLToPath } from 'url';
-
+const express = require('express');
 const app = express();
-const PORT = 3000;
-const __filename = fileURLToPath(import.meta.url);
-const __dirname = path.dirname(__filename);
 
-app.use(bodyParser.json());
-app.use(express.urlencoded({extended: true}));
-app.use(express.static(path.join(__dirname, 'public')));
 
-let pedidos = [];
-let idActual = 1;
+app.use(express.json())
+app.use(express.static("public"))
+
+let pedidos = []
 
 app.post('/pedidos', (req, res) => {
-    const { tipo, nombreCliente, clienteTelefono, origen, destino, descripcion, lugarRecogida, lugarEntrega  } = req.body;
+    const pedido = req.body;
+    console.log('req.body', req.body)
 
-    const nuevoPedido = {
-        id: pedidos.length + 1,
-        tipo,
-        nombreCliente,
-        clienteTelefono,
-        estado: "pendiente",
-        mototaxi: null
-    };
+    if(pedido && typeof pedido.tipo === String && pedido.tipo.trim() !== ""){
+        pedidos.push(pedido);
+        console.log('pedido guardado:', pedido)
+        res.json({mensaje: 'ok'});
 
-    // SI ES TRANSPORTE AGREGAMOS ORIGEN Y DESTINO.
-    if (tipo === 'transporte') {
-        nuevoPedido.origen = origen,
-        nuevoPedido.destino = destino
+    }else{
+        console.log('pedido invalido')
     }
 
-    //SI ES ENCARGO AGREGAMOS LUGAR DE RECOGIDA Y LUGAR DE ENTREGA.
-    if (tipo === 'encargo') {
-        nuevoPedido.descripcion = descripcion
-        nuevoPedido.lugarRecogida = lugarRecogida,
-        nuevoPedido.lugarEntrega = lugarEntrega
-    } 
-
-    pedidos.push(nuevoPedido);
-    res.status(201).json(nuevoPedido);
-
+    res.json({message: 'pedido invalido'})
+    
 });
 
 app.get('/pedidos', (req, res) => {
-    res.json(pedidos);
+    res.json(pedidos)
 });
 
-app.get('/pedidos/:id/info', (req, res) => {
-    const id = parseInt(req.params.id, 10);
-
-    const index = pedidos.find(pedido => pedido.id === id);
-
-    if (!index) {
-        res.status(500).send('NO ENCONTRAMOS NADA EN NUESTRA BASE DE DATOS')
-    }
-
-    res.status(200).json(index);
+app.listen(3000, () => {
+    console.log('SERVIDOR CORRIENDO...')
 });
 
-
-app.put('/pedidos/:id/aceptar', (req, res) => {
-    const id = parseInt(req.params.id, 10);
-    const {nombre, telefono} = req.body;
-
-    const pedido = pedidos.find(p => p.id === id);
-
-    if (!pedido) {
-        return res.status(404).json({mensaje: 'PEDIDO NO ENCONTRADO'});
-    };
-
-    if (pedido.estado !== 'pendiente') {
-        return res.status(400).json({mensaje: 'EL PEDIDO YA FUE TOMADO'});
-    };
-
-    pedido.estado = 'aceptado',
-    pedido.mototaxi = {
-        nombre,
-        telefono
-    };
-
-    res.status(200).json(pedido);
-});
-
-
-app.put('/pedidos/:id/completar', (req, res) => {
-    const id = parseInt(req.params.id);
-    const pedido = pedidos.find(p => p.id === id);
-
-    if (!pedido) {
-        return res.status(404).json({mensaje: 'PEDIDO NO ENCONTRADO'});
-    };
-
-    if (pedido.estado !== 'aceptado') {
-        return res.status(400).json({mensaje: 'EL PEDIDO NO ESTA EN PROCESO'});
-    }
-
-    pedido.estado = 'completado',
-    res.status(200).json(pedido)
-});
-
-app.listen(PORT, () => {
-    console.log('SERVIDOR CORRIENDO...');
-});

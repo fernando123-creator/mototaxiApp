@@ -1,219 +1,41 @@
-<!-- <!DOCTYPE html>
+<!DOCTYPE html>
 <html lang="en">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>MOTOTAXI APP</title>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Baiiku Palomino</title>
+  <link rel="stylesheet" href="./css/estilos.css">
+  <link rel="shortcut icon" href="./img/motoIcono.png" type="image/x-icon">
+  <link href="https://fonts.googleapis.com/css2?family=Fjalla+One&family=Oswald:wght@200..700&family=Ubuntu:ital,wght@0,300;0,400;0,500;0,700;1,300;1,400;1,500;1,700&display=swap" rel="stylesheet">
 </head>
 <body>
 
-    <h1>panel de control</h1>
+    <section>
+      <h3><a href="#">Conocenos Más</a></h3>
+    </section>
 
-    <div id="lista-pedidos"></div>
+    <section class="titlle">
+      <h3>Bienvenidos a</h3>
+      <h1>Baiiku <label>Palomino</label></h1>
+    </section>
 
-    <script>
-        async function cargarPedidos() {
-            const respuesta = await fetch("/pedidos");
-            const pedidos = await respuesta.json();
+    <section class="containerLogo">
+      <img src="./img/motoLogo.png" alt="logo del inicio">
+    </section>
 
-            const contenedor = document.getElementById('lista-pedidos');
-            contenedor.innerHTML = "";
+    <h2 class="crearCuenta">¿ Quieres Empezar Como ?</h2>
 
-            pedidos.forEach(pedido => {
-                const div = document.createElement('div');
-                div.style.border = '1px solid #ccc';
-                div.style.padding = '10px';
-                div.style.margin = '10px 0'
-
-                div.innerHTML = `
-                    <p><strong>ID:</strong> ${pedido.id} </p>
-                    <p><strong>TIPO:</strong> ${pedido.tipo} </p>
-                    <p><strong>DESCRIPCION:</strong> ${pedido.descripcion} </p>
-                    <p><strong>ESTADO:</strong> ${pedido.estado} </p>
-                    ${pedido.estado === 'pendiente' ? `<button onclick="AceptarPedido(${pedido.id})">Aceptar</button>` : ""}
-                    ${pedido.estado === 'aceptado' ? `<button onclick="completarPedido(${pedido.id})">Completar</button>` : ""}
-                `;
-
-                contenedor.appendChild(div);
-
-            });
-        }
-
-        async function AceptarPedido(id) {
-            await fetch(`/pedidos/${id}/aceptar`, {
-                method: 'PUT',
-
-                headers: {
-                    'Content-Type': 'application/json'
-                },
-
-                body: JSON.stringify({nombre: 'mototaxi 1', telefono: 3124508975})
-            });
-
-            cargarPedidos(); //RECARGA LOS PEDIDOS DESPUES DE ACEPTAR.
-
-        };
-
-
-        async function completarPedido(id) {
-            await fetch(`/pedidos/${id}/completar`, {
-                method: 'PUT'
-            });
-
-            cargarPedidos(); //RECARGA LOS PEDIDOS DESPUES DE ACEPTAR.
-        };
-
-
-        cargarPedidos(); //cargar pedidos al inicio
-
-        setInterval(cargarPedidos, 5000);
-    </script>
-</body>
-</html> -->
-
-<!--CODIGO NUEVO UTILIZANDO INPUTS COMO REFENCIA (ES UN EJEMPLO)-->
-
- <!DOCTYPE html>
-<html lang="es">
-<head>
-  <meta charset="UTF-8" />
-  <title>Plataforma Mototaxi</title>
-</head>
-<body>
-
-  <h1>Plataforma de Servicios</h1>
-
-  <!-- ================= TURISTA ================= -->
-  <h2>Solicitar Servicio</h2>
-
-  <label>Tipo de servicio:</label>
-  <select id="tipo" onchange="cambiarFormulario()">
-    <option value="transporte">Transporte</option>
-    <option value="encargo">Encargo</option>
-  </select>
-
-  <br><br>
-
-  <input type="text" id="nombreCliente" placeholder="Tu nombre"><br><br>
-  <input type="text" id="clienteTelefono" placeholder="Tu teléfono"><br><br>
-
-  <!-- CAMPOS TRANSPORTE -->
-  <div id="formTransporte">
-    <input type="text" id="origen" placeholder="Lugar de recogida"><br><br>
-    <input type="text" id="destino" placeholder="Destino"><br><br>
-  </div>
-
-  <!-- CAMPOS ENCARGO -->
-  <div id="formEncargo" style="display:none;">
-    <input type="text" id="descripcion" placeholder="¿Qué hay que traer?"><br><br>
-    <input type="text" id="lugarRecogida" placeholder="Dónde recoger"><br><br>
-    <input type="text" id="lugarEntrega" placeholder="Dónde entregar"><br><br>
-  </div>
-
-  <button onclick="crearPedido()">Pedir servicio</button>
-
-  <hr>
-
-  <!-- ================= MOTOTAXI ================= -->
-  <h2>Panel Mototaxi</h2>
-
-  <div id="lista-pedidos"></div>
-
-  <script>
-    function cambiarFormulario() {
-      const tipo = document.getElementById('tipo').value;
-      document.getElementById('formTransporte').style.display =
-        tipo === 'transporte' ? 'block' : 'none';
-      document.getElementById('formEncargo').style.display =
-        tipo === 'encargo' ? 'block' : 'none';
-    }
-
-    async function crearPedido() {
-      const tipo = document.getElementById('tipo').value;
-
-      const datos = {
-        tipo,
-        nombreCliente: document.getElementById('nombreCliente').value,
-        clienteTelefono: document.getElementById('clienteTelefono').value
-      };
- 
-      if (tipo === 'transporte') {
-        datos.origen = document.getElementById('origen').value;
-        datos.destino = document.getElementById('destino').value;
-      }
-
-      if (tipo === 'encargo') {
-        datos.descripcion = document.getElementById('descripcion').value;
-        datos.lugarRecogida = document.getElementById('lugarRecogida').value;
-        datos.lugarEntrega = document.getElementById('lugarEntrega').value;
-      }
-
-      await fetch('/pedidos', {
-        method: 'POST',
-        headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify(datos)
-      });
-
-      cargarPedidos();
-    }
-
-    async function cargarPedidos() {
-      const respuesta = await fetch('/pedidos');
-      const pedidos = await respuesta.json();
-
-      const contenedor = document.getElementById('lista-pedidos');
-      contenedor.innerHTML = '';
-
-      pedidos.forEach(pedido => {
-        const div = document.createElement('div');
-        div.style.border = '1px solid #ccc';
-        div.style.padding = '10px';
-        div.style.margin = '10px 0';
-
-        div.innerHTML = `
-          <strong>ID:</strong> ${pedido.id}<br>
-          <strong>Tipo:</strong> ${pedido.tipo}<br>
-          <strong>Cliente:</strong> ${pedido.nombreCliente}<br>
-          <strong>Telefono:</strong> ${pedido.clienteTelefono}<br>
-          <strong>Estado:</strong> ${pedido.estado}<br>
-          ${pedido.tipo === 'transporte' ? `<strong>Ruta:</strong> ${pedido.origen} → ${pedido.destino}<br>` : ''}
-          ${pedido.tipo === 'encargo' ? `<strong>Encargo:</strong> ${pedido.descripcion}<br>
-          <strong>Recoger:</strong> ${pedido.lugarRecogida}<br>
-          <strong>Entregar:</strong> ${pedido.lugarEntrega}<br>` : ''}
-          ${pedido.estado === 'pendiente' ? `<button onclick="aceptarPedido(${pedido.id})">Aceptar</button>` : ''}
-          ${pedido.estado === 'aceptado' ? `<button onclick="completarPedido(${pedido.id})">Completar</button>` : ''}
-        `;
-
-        contenedor.appendChild(div);
-      });
-    }
-
-    async function aceptarPedido(id) {
-      await fetch(`http://localhost:3000/pedidos/${id}/aceptar`, {
-        method: 'PUT',
-        headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({ nombre: 'Mototaxi 1', telefono: '3000000000' })
-      });
-
-      cargarPedidos();
-    }
-
-    async function completarPedido(id) {
-      await fetch(`/pedidos/${id}/completar`, {
-        method: 'PUT'
-      });
-
-      cargarPedidos();
-    }
-
-
-    async function encontrarPedidos(params) {
-      await fetch(`/pedidos/${id}/info`);
-      encontrarPedidos();
-    }
-
-    cargarPedidos();
-  </script>
-
+    <section class="botonesSeleccionDeRol">
+      <button class="N1 boton" onclick="irPagina()"><strong>Mototaxista</strong></button> |
+      <button class="N2 boton">Cliente</button>|
+      <button class="N3 boton">Invitado</button>
+    </section>
+      
+    <section class="IniciarSecion">
+      <h2 class="HayCuenta">¿ Ya Tienes Cuenta ?</h2>
+      <button class="N4" onclick="irPaginaIniciarSecion()">Iniciar Seción</button>
+    </section>
+    
+  <script src="main.js"></script>
 </body>
 </html>
