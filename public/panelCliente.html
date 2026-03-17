@@ -82,16 +82,16 @@
         </label>
      </section>
 
-        <form class="panelCliente" id="formTransporte">
+        <form class="panelCliente hidden" id="formTransporte">
 
         <label>Nombre:</label>
-        <input type="text" class="N1" id="nombre" placeholder="Nombre Completo">
+        <input type="text" class="N1" name="nombre" placeholder="Nombre Completo">
 
         <label>Telefono:</label>
-        <input type="tel" class="N2" id="telefono" placeholder="Número de telefono">
+        <input type="tel" class="N2" name="telefono" placeholder="Número de telefono">
 
         <label>Destino:</label>
-        <input type="text" class="N4" id="destino" placeholder="¿Donde entregar?">
+        <input type="text" class="N4" name="destino" placeholder="¿Donde entregar?">
 
         <div class="botones">
         <button type="button">mandar ubicación</button>
@@ -100,26 +100,25 @@
 
         </form>
 
-        <form class="panelCliente" id="formEncargo">
+        <form class="panelCliente hidden" id="formEncargo">
 
         <label>Nombre:</label>
-        <input type="text" class="N1" id="nombreE" placeholder="Nombre Completo">
+        <input type="text" class="N1" name="nombre" placeholder="Nombre Completo">
 
         <label>Telefono:</label>
-        <input type="tel" class="N2" id="telefonoE" placeholder="Número de telefono">
+        <input type="tel" class="N2" name="telefono" placeholder="Número de telefono">
 
         <label>Descripcion:</label>
-        <input type="text" class="N3" id="descripcionE" placeholder="¿Que hay que traer?">
+        <input type="text" class="N3" name="descripcion" placeholder="¿Que hay que traer?">
 
         <label>Destino:</label>
-        <input type="text" class="N4" id="destinoE" placeholder="¿Donde entregar?">
+        <input type="text" class="N4" name="destino" placeholder="¿Donde entregar?">
 
+        
         <div class="botones">
         <button type="button">mandar ubicación</button>
         <button id="pedirServicio" type="submit">Pedir servicio</button>
         </div>
-
-        </form>
 
     </main>
  </div>

@@ -194,6 +194,6 @@ color:white;
 cursor:pointer;
 }
 
-#formEncargo{
-    display: none;
+.hidden{
+display:none;
 }

@@ -1,65 +1,72 @@
-const radios = document.querySelectorAll('input[name="servicio"]');
-const boton = document.getElementById('pedirServicio');
-const transporte = document.getElementById("formTransporte");
-const encargo = document.getElementById("formEncargo");
+const radioServicios = document.querySelectorAll('input[name="servicio"]');
+
+const formTransporte = document.getElementById("formTransporte");
+const formEncargo = document.getElementById("formEncargo");
 
 
-//ENVIAR PEDIDOS AL SERVIDOR
-
-boton.addEventListener("click", async () => {
-
-    const tipo = document.querySelector('input[name="servicio"] : checked').value;
-    console.log("tipo", tipo)
-
-    if (tipo === "transporte") {
-        pedido = {
-            Tipo: "transporte",
-            Nombre: document.getElementById('nombre').value,
-            Telefono: document.getElementById('telefono').value,
-            Destino: document.getElementById('destino').value
-        };
-    };
-
-    if (tipo === "encargo") {
-        pedido = {
-            Tipo: "encargo",
-            Nombre: document.getElementById('nombreE').value,
-            Telefono: document.getElementById('telefonoE').value,
-            Descripcion: document.getElementById('descripcionE').value,
-            Destino: document.getElementById('destinoE').value
-        };
-    };
-
-
-    await fetch("/pedidos", {
-        method: 'POST',
-        headers: {'Content-Type': 'aplication/json'},
-        body: JSON.stringify(pedido)
-    });
-
-    alert("PEDIDO ENVIADO")
-});
-
-
-
-
-//CAMBIO DE FORMULARIO
-radios.forEach(radio => {
+radioServicios.forEach(radio => {
 
     radio.addEventListener("change", () => {
 
-    if(radio.value === "transporte"){
+        formTransporte.classList.add("hidden");
+        formEncargo.classList.add("hidden");
 
-        transporte.style.display = "block"
-        encargo.style.display = "none"
+        if(radio.value === "transporte"){
+            formTransporte.classList.remove("hidden");
+        }
 
-    }
+        if(radio.value === "encargo"){
+            formEncargo.classList.remove("hidden");
+        }
 
-    if(radio.value === "encargo"){
+    });
 
-        encargo.style.display = "block"
-        transporte.style.display = "none"
+});
 
-     }
-  })
-})
+async function enviarPedido(form, tipo){
+
+    const datos = Object.fromEntries(new FormData(form));
+    console.log(datos)
+
+        if(!datos.nombre || !datos.telefono || !datos.destino){
+            alert("Completa los campos");
+            return;
+        }
+
+        const pedido = {
+            tipo,
+            ...datos
+        };
+
+        await fetch("/guardar",{
+            method:"POST",
+            headers:{
+                "Content-Type":"application/json"
+            },
+            body: JSON.stringify(pedido)
+        });
+
+        alert("PEDIDO ENVIADO");
+
+        form.reset();
+
+}
+
+
+
+formTransporte.addEventListener("submit",(e)=>{
+
+    e.preventDefault();
+
+    enviarPedido(formTransporte,"transporte");
+
+});
+
+
+formEncargo.addEventListener("submit",(e)=>{
+
+    e.preventDefault();
+
+    enviarPedido(formEncargo,"encargo");
+
+});

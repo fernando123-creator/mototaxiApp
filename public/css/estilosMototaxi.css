@@ -108,10 +108,10 @@ border-radius:5px;
     border: 2px solid black;
     border-radius: 15px;
     margin: 5px;
-    
     display: flex;
     flex-wrap: wrap;
     gap: 10px;
+    box-shadow: 0 1px 3px black;
 }
 
 .solicitud{
@@ -163,3 +163,53 @@ label{
     cursor: pointer;
 }
 
+.cartas{
+    margin: 10px;
+    border-radius: 15px;
+    box-shadow: 0 1px 3px black;
+}
+
+h3{
+    margin: 10px;
+}
+
+.tipo{
+    border-bottom: 2px solid black;
+}
+
+.containBtn{
+    text-align: center;
+    margin-bottom: 5px;
+}
+
+button{
+    display: inline-block;
+    border: 1px solid black;
+    margin: 0 5px;
+    padding: 5px;
+    border-radius: 15px;
+}
+
+.aceptar{
+  background: green;
+  color: white;
+  border: none;
+  cursor: pointer;
+  padding: 7px 9px;
+}
+
+.verMapa{
+  background: crimson;
+  color: white;
+  border: none;
+  cursor: pointer;
+  padding: 7px 9px;
+}
+
+.aceptar:active{
+    transform: scale(0.9);
+}
+
+.verMapa:active{
+    transform: scale(0.9);
+}
